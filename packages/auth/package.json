@@ -1,0 +1,27 @@
+{
+  "name": "@zeitless/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {
+    "auth:generate": "bunx @better-auth/cli@latest generate --config ./src/index.ts --output ../db/src/schema/auth-schema.ts --yes"
+  },
+  "dependencies": {
+    "@zeitless/db": "workspace:*",
+    "@zeitless/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "nanoid": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@zeitless/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}

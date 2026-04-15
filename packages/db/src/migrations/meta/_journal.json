@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1776188694133,
+      "tag": "0000_initial-commerce-schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1776188931212,
+      "tag": "0001_add-refunded-at-to-order",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1776189928573,
+      "tag": "0002_sync-better-auth-schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1776191128857,
+      "tag": "0003_add-order-email-token",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1776193765157,
+      "tag": "0004_plural-table-names",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1776203925985,
+      "tag": "0005_worthless_logan",
+      "breakpoints": true
+    }
+  ]
+}

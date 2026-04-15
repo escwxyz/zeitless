@@ -1,0 +1,35 @@
+{
+  "name": "@zeitless/api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    },
+    "./routers": {
+      "default": "./src/routers/index.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@orpc/client": "catalog:",
+    "@orpc/openapi": "catalog:",
+    "@orpc/server": "catalog:",
+    "@orpc/zod": "catalog:",
+    "@zeitless/auth": "workspace:*",
+    "@zeitless/contract": "workspace:*",
+    "@zeitless/db": "workspace:*",
+    "@zeitless/env": "workspace:*",
+    "dotenv": "catalog:",
+    "drizzle-orm": "catalog:",
+    "stripe": "^22.0.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@zeitless/config": "workspace:*",
+    "hono": "catalog:",
+    "typescript": "catalog:"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "name": "zeitless",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "dotenv": "^17.2.2",
+      "zod": "^4.1.13",
+      "typescript": "^5",
+      "@types/node": "^22.13.14",
+      "@cloudflare/workers-types": "^4.20251213.0",
+      "hono": "^4.8.2",
+      "@orpc/contract": "^1.13.4",
+      "@orpc/server": "^1.13.4",
+      "@orpc/openapi": "^1.13.4",
+      "@orpc/zod": "^1.13.4",
+      "better-auth": "1.5.5",
+      "alchemy": "^0.90.0",
+      "@libsql/client": "0.15.15",
+      "libsql": "0.5.22",
+      "@orpc/client": "^1.13.4",
+      "nanoid": "^5.1.6",
+      "drizzle-orm": "^0.45.2",
+      "wrangler": "^4.82.2",
+      "@tailwindcss/vite": "^4.2.2",
+      "tailwindcss": "^4.2.2"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:web": "turbo -F web dev",
+    "dev:dashboard": "turbo -F dashboard dev",
+    "dev:server": "turbo -F server dev",
+    "db:generate": "turbo -F @zeitless/db db:generate",
+    "deploy": "turbo -F @zeitless/infra deploy",
+    "destroy": "turbo -F @zeitless/infra destroy",
+    "check": "ultracite check",
+    "fix": "ultracite fix"
+  },
+  "dependencies": {
+    "@zeitless/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "catalog:",
+    "@types/node": "catalog:",
+    "@zeitless/config": "workspace:*",
+    "bun-types": "^1.3.11",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "turbo": "^2.8.12",
+    "typescript": "catalog:",
+    "ultracite": "7.5.8"
+  },
+  "packageManager": "bun@1.3.11"
+}
