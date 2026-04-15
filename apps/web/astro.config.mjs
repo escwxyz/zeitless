@@ -1,0 +1,31 @@
+// @ts-check
+import tailwindcss from "@tailwindcss/vite";
+import alchemy from "alchemy/cloudflare/astro";
+import { defineConfig, envField } from "astro/config";
+
+import react from "@astrojs/react";
+
+// https://astro.build/config
+export default defineConfig({
+  output: "server",
+  adapter: alchemy(),
+
+  env: {
+    schema: {
+      PUBLIC_SERVER_URL: envField.string({
+        access: "public",
+        context: "client",
+        default: "http://localhost:3000",
+      }),
+    },
+  },
+
+  vite: {
+    // Vite mismatch
+    // https://github.com/withastro/astro/pull/16062
+    // @ts-ignore - Vite types are wrong
+    plugins: [tailwindcss()],
+  },
+
+  integrations: [react()],
+});

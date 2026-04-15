@@ -1,0 +1,156 @@
+---
+import "@zeitless/ui/globals.css"
+
+interface Props {
+  description?: string
+  title?: string
+}
+
+const {
+  description = "A digital archive storefront for curated fashion pieces.",
+  title = "ZEITLESS | THE ARCHIVE",
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <style is:global>
+      @import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200..800&family=Manrope:wght@200..800&display=swap");
+
+      :root {
+        --surface: #fdffda;
+        --surface-low: #fcf9f0;
+        --surface-high: #f6f4e9;
+        --surface-highest: #eae9d9;
+        --surface-overlay: rgba(253, 255, 218, 0.8);
+        --on-surface: #38392e;
+        --outline: #bbbaac;
+        --primary: #775a19;
+        --primary-light: #ffdea5;
+      }
+
+      html {
+        background: var(--surface);
+      }
+
+      body {
+        margin: 0;
+        background: var(--surface);
+        color: var(--on-surface);
+        font-family: "Manrope", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+
+      h1,
+      h2,
+      h3,
+      .display-font {
+        font-family: "Newsreader", serif;
+      }
+
+      .label-font {
+        font-family: "Manrope", sans-serif;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+      }
+
+      .gold-gradient {
+        background: linear-gradient(
+          45deg,
+          var(--primary),
+          var(--primary-light)
+        );
+      }
+
+      .reveal {
+        animation: reveal-up 700ms ease-out both;
+      }
+
+      .reveal-delay-1 {
+        animation-delay: 100ms;
+      }
+
+      .reveal-delay-2 {
+        animation-delay: 180ms;
+      }
+
+      .reveal-delay-3 {
+        animation-delay: 260ms;
+      }
+
+      .float-slow {
+        animation: float-slow 10s ease-in-out infinite;
+      }
+
+      .hover-lift {
+        transition:
+          transform 220ms ease,
+          box-shadow 220ms ease,
+          filter 220ms ease;
+      }
+
+      .hover-lift:hover {
+        transform: translateY(-4px);
+      }
+
+      @keyframes reveal-up {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float-slow {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-[color:var(--surface)] text-[color:var(--on-surface)]">
+    <div class="relative isolate overflow-hidden">
+      <div
+        class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(212,175,55,0.14),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(16,185,129,0.08),_transparent_22%),linear-gradient(180deg,#fdffda_0%,#fcf9f0_100%)]"
+      >
+      </div>
+      <div
+        class="pointer-events-none absolute top-[-7rem] left-[-8rem] -z-10 h-80 w-80 rounded-full bg-[#775a19]/10 blur-3xl"
+      >
+      </div>
+      <div
+        class="pointer-events-none absolute top-40 right-[-10rem] -z-10 h-96 w-96 rounded-full bg-[#ffdea5]/20 blur-3xl"
+      >
+      </div>
+      <slot />
+    </div>
+  </body>
+</html>

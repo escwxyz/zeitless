@@ -35,9 +35,9 @@
 
 ### 🛒 Storefront（apps/web - Astro）
 
-- [ ] 首页（极简）
-- [ ] 商品列表页
-- [ ] 商品详情页
+- [x] 首页（极简）
+- [x] 商品列表页
+- [x] 商品详情页
 - [ ] 购物车页面
 - [ ] Checkout 页面
 - [ ] 30 分钟内取消 / 退款提示
@@ -74,11 +74,11 @@
 ### ⭐ Priority 1
 
 - [x] Buyer order access by email token
-- [ ] 商品列表页（Astro）
+- [x] 商品列表页（Astro）
 
 ### ⭐ Priority 2
 
-- [ ] 商品详情页
+- [x] 商品详情页
 - [ ] 登录买家能力（Better Auth 完整落地之后）
 - [ ] 订单取消 / 退款规则
 
@@ -108,3 +108,4 @@
 - `packages/api` currently wires the db-backed public product list/detail, reservation create/release/expire, buyer order create/get/cancel handlers, and DO-backed cart/checkout handlers; guest-vs-login cart persistence stays a later Better Auth enhancement.
 - Stripe payment will use hosted Checkout Sessions first; frontend customization can come later when the storefront is ready.
 - Buyer cancellation now issues a real Stripe refund inside the 30-minute window and releases the reservation back to inventory.
+- Storefront implementation now includes the product detail page with Astro-first route composition, shared layout components, mock data in `apps/web/src/lib/data.ts`, a desktop masonry collage, and a mobile shadcn carousel.
