@@ -8,7 +8,7 @@ import {
   product as productTable,
   reservation as reservationTable,
 } from "@zeitless/db/schema";
-import type { z } from "zod";
+import { z } from "zod";
 
 import { parseJson, toOrder } from "./shared";
 import type { CommerceBindings } from "./shared";
