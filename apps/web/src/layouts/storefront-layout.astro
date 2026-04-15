@@ -1,6 +1,8 @@
 ---
 import "@zeitless/ui/globals.css"
 
+import { CartDrawer } from "../components/storefront/cart-drawer"
+
 interface Props {
   description?: string
   title?: string
@@ -137,7 +139,7 @@ const {
     </style>
   </head>
   <body class="bg-[color:var(--surface)] text-[color:var(--on-surface)]">
-    <div class="relative isolate overflow-hidden">
+    <div class="relative isolate overflow-x-hidden">
       <div
         class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(212,175,55,0.14),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(16,185,129,0.08),_transparent_22%),linear-gradient(180deg,#fdffda_0%,#fcf9f0_100%)]"
       >
@@ -151,6 +153,7 @@ const {
       >
       </div>
       <slot />
+      <CartDrawer client:only="react" />
     </div>
   </body>
 </html>
