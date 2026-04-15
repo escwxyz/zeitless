@@ -58,6 +58,17 @@ export const productListInputSchema = cursorPaginationInputSchema.extend({
   condition: productConditionSchema.optional(),
 });
 
+export const adminProductPublicationStateSchema = z.enum(["all", "draft", "published"]);
+export const adminProductInventoryStateSchema = z.enum(["all", "non-sold", "sold"]);
+
+export const adminProductListInputSchema = cursorPaginationInputSchema.extend({
+  brand: z.string().min(1).optional(),
+  category: z.string().min(1).optional(),
+  condition: productConditionSchema.optional(),
+  publicationState: adminProductPublicationStateSchema.default("all"),
+  inventoryState: adminProductInventoryStateSchema.default("non-sold"),
+});
+
 export const productIdInputSchema = z.object({
   productId: idSchema,
 });
@@ -78,8 +89,19 @@ export const adminProductWriteSchema = z.object({
   internalTags: z.array(z.string().min(1)).default([]),
 });
 
-export const adminProductPatchSchema = adminProductWriteSchema.partial().extend({
+export const adminProductPatchSchema = z.object({
+  title: z.string().min(1).optional(),
+  brand: z.string().min(1).optional(),
+  category: z.string().min(1).optional(),
+  condition: productConditionSchema.optional(),
+  size: z.string().min(1).optional(),
+  price: moneyAmountSchema.optional(),
+  currency: currencyCodeSchema.optional(),
+  description: z.string().min(1).optional(),
+  images: z.array(productImageSchema).optional(),
+  costPrice: moneyAmountSchema.optional(),
   draft: z.boolean().optional(),
+  internalNotes: z.string().min(1).optional(),
   internalTags: z.array(z.string().min(1)).optional(),
 });
 

@@ -4,10 +4,14 @@ import { commerceContracts } from "./app";
 import { adminContracts } from "./admin";
 import {
   adminOrderSchema,
+  adminProductListInputSchema,
+  adminProductPatchSchema,
   adminProductSchema,
+  adminProductWriteSchema,
   buyerOrderSchema,
   orderStatusSchema,
   productSchema,
+  productListInputSchema,
 } from "./common";
 
 describe("@zeitless/contract", () => {
@@ -32,9 +36,29 @@ describe("@zeitless/contract", () => {
   test("keeps admin contracts separate from the buyer-facing surface", () => {
     expect(Object.keys(adminContracts)).toEqual(["product", "order"]);
 
+    expect(Object.keys(adminContracts.product)).toEqual(["list", "detail", "create", "update"]);
     expect(adminContracts.product.create).toBeTruthy();
     expect(adminContracts.product.update).toBeTruthy();
     expect(adminContracts.order.updateTracking).toBeTruthy();
+  });
+
+  test("uses a distinct admin product list query schema with lifecycle filters", () => {
+    const adminListQuery = adminProductListInputSchema.parse({
+      limit: 10,
+      publicationState: "published",
+      inventoryState: "sold",
+    });
+
+    const publicListQuery = productListInputSchema.parse({
+      limit: 10,
+      publicationState: "published",
+      inventoryState: "sold",
+    });
+
+    expect(adminListQuery).toHaveProperty("publicationState", "published");
+    expect(adminListQuery).toHaveProperty("inventoryState", "sold");
+    expect(publicListQuery).not.toHaveProperty("publicationState");
+    expect(publicListQuery).not.toHaveProperty("inventoryState");
   });
 
   test("strips admin-only fields from buyer-facing product output", () => {
@@ -86,6 +110,32 @@ describe("@zeitless/contract", () => {
 
     expect(adminProduct).toHaveProperty("internalNotes", "Hold for editorial review.");
     expect(adminProduct).toHaveProperty("draft", true);
+  });
+
+  test("defaults admin product creation to draft", () => {
+    const createdProduct = adminProductWriteSchema.parse({
+      title: "Archive Blazer",
+      brand: "Zeitless",
+      category: "outerwear",
+      condition: "pre-owned",
+      size: "M",
+      price: 18_000,
+      currency: "USD",
+      description: "A sharply cut archival blazer.",
+      images: [{ url: "https://example.com/blazer.jpg", alt: "Archive blazer" }],
+    });
+
+    expect(createdProduct).toHaveProperty("draft", true);
+    expect(createdProduct).toHaveProperty("internalTags", []);
+  });
+
+  test("keeps admin product patches optional without forcing draft defaults", () => {
+    const patch = adminProductPatchSchema.parse({
+      title: "Reworked blazer",
+    });
+
+    expect(patch).toHaveProperty("title", "Reworked blazer");
+    expect(patch).not.toHaveProperty("draft");
   });
 
   test("uses the phase-1 order lifecycle status model", () => {

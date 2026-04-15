@@ -5,8 +5,8 @@ import { asProductId, createDb } from "@zeitless/db";
 import { product as productTable } from "@zeitless/db/schema";
 import type { z } from "zod";
 
-import type { CommerceBindings, ProductRow } from "./shared";
-import { toProduct } from "./shared";
+import type { CommerceBindings } from "./shared";
+import { decodeCursor, encodeCursor, toProduct } from "./shared";
 
 type Product = z.infer<typeof productSchema>;
 type ProductPage = z.infer<typeof productPageSchema>;
@@ -22,28 +22,6 @@ interface ProductListInput {
 interface ProductIdInput {
   productId: string;
 }
-
-const encodeCursor = (row: ProductRow) => `${row.createdAt.getTime()}:${row.id}`;
-
-const decodeCursor = (cursor: string) => {
-  const separatorIndex = cursor.indexOf(":");
-
-  if (separatorIndex <= 0) {
-    throw new ORPCError("BAD_REQUEST");
-  }
-
-  const createdAt = Number(cursor.slice(0, separatorIndex));
-  const id = cursor.slice(separatorIndex + 1);
-
-  if (!Number.isFinite(createdAt) || id.length === 0) {
-    throw new ORPCError("BAD_REQUEST");
-  }
-
-  return {
-    createdAt: new Date(createdAt),
-    id: asProductId(id),
-  };
-};
 
 const buildProductFilters = (input: ProductListInput) => {
   const filters = [eq(productTable.draft, false)];
@@ -72,7 +50,10 @@ const buildProductCursorFilter = (cursor: string | undefined) => {
 
   return or(
     lt(productTable.createdAt, decodedCursor.createdAt),
-    and(eq(productTable.createdAt, decodedCursor.createdAt), lt(productTable.id, decodedCursor.id)),
+    and(
+      eq(productTable.createdAt, decodedCursor.createdAt),
+      lt(productTable.id, asProductId(decodedCursor.id)),
+    ),
   );
 };
 

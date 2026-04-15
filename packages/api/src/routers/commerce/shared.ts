@@ -9,6 +9,7 @@ import type {
   cartItemSchema,
   cartSchema,
   checkoutSessionSchema,
+  adminProductSchema,
   productSchema,
   reservationSchema,
 } from "@zeitless/contract";
@@ -23,10 +24,34 @@ type CartItem = z.infer<typeof cartItemSchema>;
 type CheckoutSession = z.infer<typeof checkoutSessionSchema>;
 type Reservation = z.infer<typeof reservationSchema>;
 type BuyerOrder = z.infer<typeof buyerOrderSchema>;
+type AdminProduct = z.infer<typeof adminProductSchema>;
 
 export type ProductRow = typeof productTable.$inferSelect;
 export type ReservationRow = typeof reservationTable.$inferSelect;
 export type OrderRow = typeof orderTable.$inferSelect;
+
+export const encodeCursor = (row: { createdAt: Date; id: string }) =>
+  `${row.createdAt.getTime()}:${row.id}`;
+
+export const decodeCursor = (cursor: string) => {
+  const separatorIndex = cursor.indexOf(":");
+
+  if (separatorIndex <= 0) {
+    throw new ORPCError("BAD_REQUEST");
+  }
+
+  const createdAt = Number(cursor.slice(0, separatorIndex));
+  const id = cursor.slice(separatorIndex + 1);
+
+  if (!Number.isFinite(createdAt) || id.length === 0) {
+    throw new ORPCError("BAD_REQUEST");
+  }
+
+  return {
+    createdAt: new Date(createdAt),
+    id,
+  };
+};
 
 export const parseJson = <T>(value: string | T): T =>
   typeof value === "string" ? (JSON.parse(value) as T) : value;
@@ -64,6 +89,16 @@ export const toProduct = (row: ProductRow): Product => ({
   reservationStatus: row.reservationStatus,
   reservedUntil: toIsoString(row.reservedUntil),
   createdAt: toRequiredIsoString(row.createdAt),
+});
+
+export const toAdminProduct = (row: ProductRow): AdminProduct => ({
+  ...toProduct(row),
+  costPrice: row.costPrice ?? undefined,
+  draft: row.draft,
+  internalNotes: row.internalNotes ?? undefined,
+  internalTags: parseJson(row.internalTags),
+  publishedAt: toIsoString(row.publishedAt),
+  updatedBy: row.updatedBy,
 });
 
 export const toCartItem = (row: ProductRow, addedAt: Date | string): CartItem => ({
