@@ -11,6 +11,11 @@
       "sourceType": "github",
       "computedHash": "220e5e1b12bbaeec49ec362b6e2262d77632d0536e9758bba9acbbc323fef990"
     },
+    "shadcn": {
+      "source": "shadcn/ui",
+      "sourceType": "github",
+      "computedHash": "873c67922d80775a9fdf596db7964b579f0408c30ec6e3d11989f6055bbec89f"
+    },
     "stripe-best-practices": {
       "source": "stripe/ai",
       "sourceType": "github",

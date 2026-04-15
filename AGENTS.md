@@ -136,6 +136,7 @@ Most formatting and common issues are automatically fixed by Oxlint + Oxfmt. Run
   - Explicitly justify the deviation in the PR/commit message.
 - Treat `/docs` as the **source of truth for product and feature decisions**.
 - Do not introduce features, abstractions, or complexity that are not defined in the MVP scope.
+- When adding shadcn components for `apps/web`, run `bunx --bun shadcn@latest add <component> -c apps/web` from the repo root so generated files stay in the web package.
 
 **Rule of thumb:**
 

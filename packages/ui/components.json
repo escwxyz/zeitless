@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-lyra",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "phosphor",
+  "aliases": {
+    "components": "@zeitless/ui/components",
+    "utils": "@zeitless/ui/lib/utils",
+    "hooks": "@zeitless/ui/hooks",
+    "lib": "@zeitless/ui/lib",
+    "ui": "@zeitless/ui/components"
+  },
+  "rtl": false,
+  "menuColor": "default",
+  "menuAccent": "subtle"
+}
