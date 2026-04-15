@@ -51,7 +51,7 @@ const getStripeClient = (bindings: Env) => new StripeClient(bindings.STRIPE_SECR
 const getCheckoutStripeClient = (bindings: StripeCheckoutBindings) =>
   new StripeClient(bindings.STRIPE_SECRET_KEY);
 
-const buildCheckoutRedirectUrl = (baseUrl: string, path: string) =>
+export const buildCheckoutRedirectUrl = (baseUrl: string, path: string) =>
   new URL(path, baseUrl).toString();
 
 export const createHostedCheckoutSession = async (
@@ -61,11 +61,11 @@ export const createHostedCheckoutSession = async (
   const stripe = getCheckoutStripeClient(bindings);
   const successUrl = buildCheckoutRedirectUrl(
     bindings.CORS_ORIGIN,
-    `/?checkout=success&orderId=${input.orderId}&session_id={CHECKOUT_SESSION_ID}`,
+    `/checkout/complete?orderId=${input.orderId}&session_id={CHECKOUT_SESSION_ID}`,
   );
   const cancelUrl = buildCheckoutRedirectUrl(
     bindings.CORS_ORIGIN,
-    `/?checkout=cancel&orderId=${input.orderId}`,
+    `/checkout/cancel?orderId=${input.orderId}`,
   );
 
   const session = await stripe.checkout.sessions.create({

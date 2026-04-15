@@ -38,9 +38,9 @@
 - [x] 首页（极简）
 - [x] 商品列表页
 - [x] 商品详情页
-- [ ] 购物车页面
-- [ ] Checkout 页面
-- [ ] 30 分钟内取消 / 退款提示
+- [x] 全局购物车抽屉（drawer）
+- [x] Checkout 页面
+- [x] 30 分钟内取消 / 退款提示
 
 ### 🧠 Dashboard（apps/dashboard - TanStack Start）
 
@@ -52,9 +52,9 @@
 
 ### 💳 支付
 
-- [ ] Stripe Checkout Sessions
-- [ ] Webhook 处理订单状态
-- [ ] 支付后 30 分钟内可取消退款
+- [x] Stripe Checkout Sessions
+- [x] Webhook 处理订单状态
+- [x] 支付后 30 分钟内可取消退款
 
 ### 🚚 物流
 

@@ -1,0 +1,22 @@
+---
+import CheckoutResult from "../../components/checkout/checkout-result.astro";
+import SiteFooter from "../../components/storefront/site-footer.astro";
+import SiteHeader from "../../components/storefront/site-header.astro";
+import StorefrontLayout from "../../layouts/storefront-layout.astro";
+---
+
+<StorefrontLayout title="ZEITLESS | Checkout">
+  <SiteHeader />
+  <main>
+    <CheckoutResult
+      body="Stripe confirmed the payment and the archive reservation is being finalized. We will keep the order access flow aligned with the current email token path."
+      eyebrow="Payment received"
+      primaryHref="/collections"
+      primaryLabel="Back to archive"
+      secondaryHref="/checkout"
+      secondaryLabel="Review cart again"
+      title="Your archive order is being finalized."
+    />
+  </main>
+  <SiteFooter />
+</StorefrontLayout>

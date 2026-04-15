@@ -16,6 +16,7 @@
     "@nanostores/react": "^1.1.0",
     "@orpc/client": "catalog:",
     "@phosphor-icons/react": "^2.1.10",
+    "@tanstack/react-form": "^1.29.0",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@zeitless/api": "workspace:*",

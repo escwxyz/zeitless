@@ -1,0 +1,33 @@
+---
+import { CheckoutForm } from "../../components/checkout/checkout-form";
+import { CheckoutSummary } from "../../components/checkout/checkout-summary";
+import SiteFooter from "../../components/storefront/site-footer.astro";
+import SiteHeader from "../../components/storefront/site-header.astro";
+import StorefrontLayout from "../../layouts/storefront-layout.astro";
+import { checkoutPageContent } from "../../lib/checkout-content";
+---
+
+<StorefrontLayout title="ZEITLESS | Checkout">
+  <SiteHeader />
+  <main class="mx-auto w-full max-w-7xl px-4 pt-32 pb-24 sm:px-6 lg:px-12">
+    <section class="grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:items-start">
+      <aside class="order-first lg:order-last lg:sticky lg:top-28 lg:self-start">
+        <CheckoutSummary client:only="react" />
+      </aside>
+
+      <div class="order-last flex flex-col gap-10 lg:order-first lg:pr-8">
+        <header class="flex flex-col gap-4">
+          <p class="label-font text-[11px] tracking-[0.24em] text-[color:var(--primary)]/72 uppercase">
+            {checkoutPageContent.eyebrow}
+          </p>
+          <h1 class="display-font max-w-3xl text-5xl leading-[0.92] font-light text-[color:var(--on-surface)] sm:text-6xl lg:text-[4.2rem]">
+            {checkoutPageContent.title}
+          </h1>
+        </header>
+
+        <CheckoutForm client:only="react" />
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</StorefrontLayout>
