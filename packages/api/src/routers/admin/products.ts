@@ -106,8 +106,8 @@ export const listAdminProducts = async (
     .orderBy(desc(productTable.createdAt), desc(productTable.id))
     .limit(input.limit + 1);
 
-  const totalCountResult = await (whereClause
-    ? totalCountQuery.where(whereClause)
+  const totalCountResult = await (baseFilters.length > 0
+    ? totalCountQuery.where(and(...baseFilters))
     : totalCountQuery);
   const rows = await (whereClause ? rowsQuery.where(whereClause) : rowsQuery);
 
