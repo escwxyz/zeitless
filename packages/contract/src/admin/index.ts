@@ -1,18 +1,17 @@
-import { z } from "zod";
-
 import {
   adminOrderIdInputSchema,
   adminOrderPageSchema,
   adminOrderSchema,
   adminOrderStatusInputSchema,
   adminOrderTrackingInputSchema,
+  adminOrderListInputSchema,
+  adminProductListInputSchema,
   adminProductPageSchema,
   adminProductPatchSchema,
   adminProductSchema,
   adminProductWriteSchema,
   contract,
   productIdInputSchema,
-  productListInputSchema,
 } from "../common";
 
 const adminTags = {
@@ -29,7 +28,7 @@ export const adminContracts = {
         tags: adminTags.product,
         description: "List products for admin management.",
       })
-      .input(productListInputSchema)
+      .input(adminProductListInputSchema)
       .output(adminProductPageSchema),
     detail: contract
       .route({
@@ -63,23 +62,6 @@ export const adminContracts = {
         }),
       )
       .output(adminProductSchema),
-    delete: contract
-      .route({
-        method: "DELETE",
-        path: "/v1/admin/products/{productId}",
-        tags: adminTags.product,
-        description: "Remove a product from the catalog.",
-      })
-      .input(productIdInputSchema)
-      .output(
-        adminProductSchema
-          .pick({
-            id: true,
-          })
-          .extend({
-            deleted: z.literal(true),
-          }),
-      ),
   },
   order: {
     list: contract
@@ -89,7 +71,7 @@ export const adminContracts = {
         tags: adminTags.order,
         description: "List all orders for admin review.",
       })
-      .input(productListInputSchema)
+      .input(adminOrderListInputSchema)
       .output(adminOrderPageSchema),
     detail: contract
       .route({

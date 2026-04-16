@@ -9,6 +9,7 @@ export {
   adminOrderStatusInputSchema,
   adminOrderTrackingInputSchema,
   adminProductPageSchema,
+  adminProductListInputSchema,
   adminProductPatchSchema,
   adminProductSchema,
   adminProductWriteSchema,
