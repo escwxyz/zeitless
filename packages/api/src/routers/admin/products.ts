@@ -1,5 +1,5 @@
 import { ORPCError } from "@orpc/server";
-import { and, count, desc, eq, or, lt } from "drizzle-orm";
+import { and, count, desc, eq, lt, ne, or } from "drizzle-orm";
 import type {
   adminProductListInputSchema,
   adminProductPageSchema,
@@ -23,6 +23,9 @@ type AdminProductPatchInput = z.infer<typeof adminProductPatchSchema>;
 
 export const isSoldOutProduct = (row: Pick<ProductRow, "isSold" | "reservationStatus">) =>
   row.isSold || row.reservationStatus === "sold";
+
+export const isNonSoldProduct = (row: Pick<ProductRow, "isSold" | "reservationStatus">) =>
+  !isSoldOutProduct(row);
 
 export const resolvePublishedAt = (draft: boolean, currentPublishedAt: Date | null | undefined) => {
   if (draft) {
@@ -72,13 +75,7 @@ const buildAdminProductFilters = (input: AdminProductListInput) => {
   if (input.inventoryState === "sold") {
     filters.push(or(eq(productTable.isSold, true), eq(productTable.reservationStatus, "sold")));
   } else if (input.inventoryState === "non-sold") {
-    filters.push(
-      or(
-        eq(productTable.isSold, false),
-        eq(productTable.reservationStatus, "available"),
-        eq(productTable.reservationStatus, "reserved"),
-      ),
-    );
+    filters.push(and(eq(productTable.isSold, false), ne(productTable.reservationStatus, "sold")));
   }
 
   return filters;
