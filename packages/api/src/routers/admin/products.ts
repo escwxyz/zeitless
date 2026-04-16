@@ -35,6 +35,20 @@ export const resolvePublishedAt = (draft: boolean, currentPublishedAt: Date | nu
   return currentPublishedAt ?? new Date();
 };
 
+export const resolveNullablePatchValue = <T>(
+  patch: object,
+  key: string,
+  currentValue: T | null,
+) => {
+  if (!Object.hasOwn(patch, key)) {
+    return currentValue;
+  }
+
+  const value = (patch as Record<string, T | null | undefined>)[key];
+
+  return value === undefined ? currentValue : value;
+};
+
 const buildCursorFilter = (cursor: string | undefined) => {
   if (!cursor) {
     return;
@@ -221,9 +235,9 @@ export const updateAdminProduct = async (
         currency: changes.currency ?? row.currency,
         description: changes.description ?? row.description,
         images: changes.images ?? row.images,
-        costPrice: changes.costPrice ?? row.costPrice ?? null,
+        costPrice: resolveNullablePatchValue(changes, "costPrice", row.costPrice),
         draft: nextDraft,
-        internalNotes: changes.internalNotes ?? row.internalNotes ?? null,
+        internalNotes: resolveNullablePatchValue(changes, "internalNotes", row.internalNotes),
         internalTags: changes.internalTags ?? row.internalTags,
         publishedAt: nextPublishedAt,
       })

@@ -138,6 +138,16 @@ describe("@zeitless/contract", () => {
     expect(patch).not.toHaveProperty("draft");
   });
 
+  test("allows explicit null clears for nullable admin patch fields", () => {
+    const patch = adminProductPatchSchema.parse({
+      costPrice: null,
+      internalNotes: null,
+    });
+
+    expect(patch).toHaveProperty("costPrice", null);
+    expect(patch).toHaveProperty("internalNotes", null);
+  });
+
   test("uses the phase-1 order lifecycle status model", () => {
     expect(orderStatusSchema.options).toEqual([
       "reserved",

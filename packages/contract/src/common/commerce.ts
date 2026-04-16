@@ -99,9 +99,9 @@ export const adminProductPatchSchema = z.object({
   currency: currencyCodeSchema.optional(),
   description: z.string().min(1).optional(),
   images: z.array(productImageSchema).optional(),
-  costPrice: moneyAmountSchema.optional(),
+  costPrice: moneyAmountSchema.nullable().optional(),
   draft: z.boolean().optional(),
-  internalNotes: z.string().min(1).optional(),
+  internalNotes: z.string().min(1).nullable().optional(),
   internalTags: z.array(z.string().min(1)).optional(),
 });
 

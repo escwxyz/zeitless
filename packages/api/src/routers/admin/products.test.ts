@@ -2,7 +2,12 @@
 
 import { describe, expect, test } from "bun:test";
 
-import { isNonSoldProduct, isSoldOutProduct, resolvePublishedAt } from "./products";
+import {
+  isNonSoldProduct,
+  isSoldOutProduct,
+  resolveNullablePatchValue,
+  resolvePublishedAt,
+} from "./products";
 
 describe("@zeitless/api admin product helpers", () => {
   test("treats sold products as immutable regardless of draft state", () => {
@@ -19,5 +24,15 @@ describe("@zeitless/api admin product helpers", () => {
     expect(now).toBeInstanceOf(Date);
     expect(resolvePublishedAt(true, now)).toBeNull();
     expect(resolvePublishedAt(false, now)).toBe(now);
+  });
+
+  test("keeps omitted nullable patch fields intact while allowing explicit null clears", () => {
+    const patch = {};
+
+    expect(resolveNullablePatchValue(patch, "costPrice", 9600)).toBe(9600);
+    expect(resolveNullablePatchValue({ costPrice: null }, "costPrice", 9600)).toBeNull();
+    expect(resolveNullablePatchValue({ internalNotes: "updated" }, "internalNotes", null)).toBe(
+      "updated",
+    );
   });
 });
